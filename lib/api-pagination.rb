@@ -47,10 +47,10 @@ module ApiPagination
     private
 
     def paginate_with_pagy(collection, options)
-      if Pagy::DEFAULT[:max_per_page] && options[:per_page] > Pagy::DEFAULT[:max_per_page]
-        options[:per_page] = Pagy::DEFAULT[:max_per_page]
+      if Pagy.options[:max_per_page] && options[:per_page] > Pagy.options[:max_per_page]
+        options[:per_page] = Pagy.options[:max_per_page]
       elsif options[:per_page] <= 0
-        options[:per_page] = Pagy::DEFAULT[:limit]
+        options[:per_page] = Pagy.options[:limit]
       end
 
       pagy = pagy_from(collection, options)
@@ -73,14 +73,14 @@ module ApiPagination
       # Pagy 9.x requires keyword arguments
       # Use explicit keyword argument syntax to avoid Ruby version quirks
       pagy_options = {count: count, limit: options[:per_page], page: options[:page]}
-      Pagy.new(**pagy_options)
+      Pagy::Offset.new(**pagy_options)
     end
 
     def pagy_pages_from(pagy)
       {}.tap do |pages|
         unless pagy.page == 1
           pages[:first] = 1
-          pages[:prev] = pagy.prev
+          pages[:prev] = pagy.previous
         end
 
         unless pagy.page == pagy.pages
