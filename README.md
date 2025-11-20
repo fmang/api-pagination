@@ -16,7 +16,7 @@ gem 'rails-api'
 gem 'grape', '>= 0.10.0'
 
 # Then choose your preferred paginator from the following:
-gem 'pagy'
+gem 'pagy', '>= 43.0.0' # Due to breaking changes, newer versions of api-pagination require pagy 43.0.0 or later
 gem 'kaminari'
 gem 'will_paginate'
 
@@ -71,7 +71,7 @@ end
 Pagy does not have a built-in way to specify a maximum number of items per page, but `api-pagination` will check if you've set a `:max_per_page` variable. To configure this, you can use the following code somewhere in an initializer:
 
 ```ruby
-Pagy::DEFAULT[:max_per_page] = 100
+Pagy.options[:max_per_page] = 100
 ```
 
 If left unconfigured, clients can request as many items per page as they wish, so it's highly recommended that you configure this.
@@ -205,14 +205,3 @@ end
 [activeadmin]: https://github.com/activeadmin/activeadmin
 [kaminari]: https://github.com/amatsuda/kaminari
 [will_paginate]: https://github.com/mislav/will_paginate
-
-[travis]: https://travis-ci.org/davidcelis/api-pagination
-[travis-badge]: http://img.shields.io/travis/davidcelis/api-pagination/master.svg
-[coveralls]: https://coveralls.io/r/davidcelis/api-pagination
-[coveralls-badge]: http://img.shields.io/coveralls/davidcelis/api-pagination/master.svg
-[code-climate]: https://codeclimate.com/github/davidcelis/api-pagination
-[code-climate-badge]: http://img.shields.io/codeclimate/github/davidcelis/api-pagination.svg
-[gemnasium]: http://gemnasium.com/davidcelis/api-pagination
-[gemnasium-badge]: http://img.shields.io/gemnasium/davidcelis/api-pagination.svg
-[gittip]: https://gittip.com/davidcelis
-[gittip-badge]: http://img.shields.io/gittip/davidcelis.svg
